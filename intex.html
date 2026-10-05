@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZYMTHRA - Kerala SSLC Study Hub</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+            },
+            accent: {
+              orange: '#f97316',
+              lightOrange: '#fff7ed',
+              green: '#10b981',
+              lightGreen: '#ecfdf5',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    /* Smooth transitions */
+    .transition-all-custom {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #334155;
+    }
+
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.92; transform: scale(0.98); }
+    }
+    .animate-pulse-subtle {
+      animation: pulse-subtle 3s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- TOP HEADER / NAVBAR -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-white/90 dark:bg-slate-900/90 border-b border-purple-100 dark:border-slate-800 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- LOGO & BRAND -->
+      <div class="flex items-center gap-6">
+        <button onclick="switchTab('home')" class="flex items-center gap-3 group text-left focus:outline-none">
+          <div class="bg-slate-950 p-2 rounded-xl shadow-md group-hover:scale-105 transition-transform flex items-center justify-center">
+            <!-- Exact ZYMTHRA vector typography SVG -->
+            <svg class="h-6 w-auto text-white fill-current" viewBox="0 0 380 90">
+              <path d="M 15 20 L 65 20 L 25 70 L 65 70 L 65 80 L 10 80 L 50 30 L 10 30 Z" />
+              <path d="M 75 20 L 95 20 L 110 50 L 125 20 L 145 20 L 120 75 C 115 88 100 90 90 85 L 95 72 C 100 75 108 74 110 68 L 75 20 Z" />
+              <path d="M 150 20 L 170 20 L 185 50 L 200 20 L 220 20 L 220 80 L 202 80 L 202 42 L 188 72 L 182 72 L 168 42 L 168 80 L 150 80 Z" />
+              <path d="M 225 20 L 275 20 L 275 32 L 258 32 L 258 80 L 242 80 L 242 32 L 225 32 Z" />
+              <path d="M 280 20 L 298 20 L 298 44 L 322 44 L 322 20 L 340 20 L 340 80 L 322 80 L 322 58 L 298 58 L 298 80 L 280 80 Z" />
+              <path d="M 345 20 L 375 20 C 385 20 388 30 380 40 L 388 80 L 370 80 L 364 44 L 361 44 L 361 80 L 345 80 Z" />
+              <circle cx="370" cy="65" r="12" />
+            </svg>
+          </div>
+          <div class="hidden sm:block">
+            <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-300 bg-clip-text text-transparent">zymthra</span>
+            <span class="block text-[9px] font-extrabold text-purple-600 dark:text-purple-400 uppercase tracking-widest">KERALA SSLC HUB</span>
+          </div>
+        </button>
+
+        <!-- MAIN DESKTOP NAVIGATION -->
+        <nav class="hidden md:flex items-center space-x-1 text-xs font-semibold">
+          <button onclick="switchTab('home')" id="nav-home" class="px-3 py-2 rounded-xl transition nav-btn text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-950/60 font-bold">Home</button>
+          <button onclick="switchTab('subjects')" id="nav-subjects" class="px-3 py-2 rounded-xl transition nav-btn text-slate-600 dark:text-slate-300 hover:text-purple-600">Subjects & Notes</button>
+          <button onclick="switchTab('tools')" id="nav-tools" class="px-3 py-2 rounded-xl transition nav-btn text-slate-600 dark:text-slate-300 hover:text-purple-600">SSLC Tools</button>
+          <button onclick="switchTab('premium')" id="nav-premium" class="px-3 py-2 rounded-xl transition nav-btn text-amber-600 dark:text-amber-400 font-bold hover:bg-amber-50 dark:hover:bg-amber-950/30">⚡ Zymthra Pro</button>
+          <button onclick="switchTab('dashboard')" id="nav-dashboard" class="px-3 py-2 rounded-xl transition nav-btn text-slate-600 dark:text-slate-300 hover:text-purple-600">Dashboard</button>
+          <button onclick="switchTab('admin')" id="nav-admin" class="px-3 py-2 rounded-xl transition nav-btn text-slate-600 dark:text-slate-300 hover:text-purple-600">Admin Console</button>
+          <button onclick="switchTab('database')" id="nav-database" class="px-3 py-2 rounded-xl transition nav-btn text-slate-600 dark:text-slate-300 hover:text-purple-600">DB Schema</button>
+        </nav>
+      </div>
+
+      <!-- RIGHT SIDE USER CONTROLS -->
+      <div class="flex items-center gap-2.5">
+        <!-- CREDIT / PRO BADGE -->
+        <div id="user-badge-container">
+          <!-- Dynamically populated via JavaScript -->
+        </div>
+
+        <!-- DARK MODE TOGGLE -->
+        <button onclick="toggleDarkMode()" class="p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition" title="Toggle Theme">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT VIEWS -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- ================= VIEW 1: HOME ================= -->
+    <section id="view-home" class="space-y-10">
+      
+      <!-- HERO BANNER -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-purple-900 via-indigo-950 to-slate-950 text-white p-8 sm:p-12 shadow-2xl border border-purple-500/20">
+        <div class="relative z-10 max-w-3xl space-y-6">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-purple-200 text-xs font-semibold">
+            <span class="text-amber-400">🔥</span> SCERT Class 10 SSLC Syllabus (Kerala)
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+            Your SSLC Study Hub with <span class="bg-gradient-to-r from-purple-300 via-pink-300 to-amber-200 bg-clip-text text-transparent">Zymthra</span>
+          </h1>
+
+          <p class="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-2xl">
+            Access chapter-wise SCERT study notes, solved previous year board papers, English/Malayalam discourse guides, physics & maths key formula cheat sheets, and revision materials.
+          </p>
+
+          <!-- SEARCH BAR -->
+          <div class="flex flex-col sm:flex-row gap-3 pt-2">
+            <div class="relative flex-1">
+              <input
+                type="text"
+                id="home-search-input"
+                placeholder="Search Arithmetic Sequences, Joule's Law, Organic Chemistry, English Profile..."
+                onkeyup="handleHomeSearch(event)"
+                class="w-full px-4 py-3 pl-10 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-slate-400 text-xs focus:outline-none focus:ring-2 focus:ring-purple-400"
+              />
+              <span class="absolute left-3.5 top-3.5 text-slate-400 text-xs">🔍</span>
+            </div>
+            <button
+              onclick="executeSearch()"
+              className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold text-xs shadow-lg transition flex items-center justify-center gap-2"
+            >
+              Search SSLC Notes ➔
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- REWARDED AD BANNER FOR FREE USERS -->
+      <div id="home-ad-banner" class="p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 via-purple-500/10 to-emerald-500/10 border border-amber-500/20 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="p-3 bg-amber-500 text-white rounded-2xl shadow-md text-2xl">🪙</div>
+          <div>
+            <h3 class="font-bold text-sm">Need Credits for SSLC PDF Downloads?</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Watch a 15-second sponsor video ad to earn +5 download credits instantly!</p>
+          </div>
+        </div>
+        <button
+          onclick="startRewardedAd()"
+          class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-black shadow-md transition flex items-center gap-2 whitespace-nowrap"
+        >
+          ▶ Watch Ad (+5 Credits)
+        </button>
+      </div>
+
+      <!-- SUBJECTS GRID -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-xl font-extrabold tracking-tight">SSLC Subjects (വിഷയങ്ങൾ)</h2>
+            <p class="text-xs text-slate-500">Select a subject to view SCERT chapter notes and solved papers</p>
+          </div>
+        </div>
+
+        <div id="subjects-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+          <!-- Dynamically inserted via JS -->
+        </div>
+      </div>
+
+      <!-- FEATURED CHAPTER NOTES -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-extrabold tracking-tight">Latest Class 10 Revision Notes & PDFs</h2>
+          <button onclick="switchTab('subjects')" class="text-xs font-bold text-purple-600 dark:text-purple-400 hover:underline">
+            View All Notes ➔
+          </button>
+        </div>
+
+        <div id="featured-chapters-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Dynamically inserted via JS -->
+        </div>
+      </div>
+
+      <!-- NORMAL AD PLACEMENT FOR FREE USERS -->
+      <div id="normal-ad-placement" class="p-6 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center space-y-2">
+        <span class="text-[10px] uppercase font-bold tracking-widest text-slate-400">SPONSORED ADVERTISEMENT</span>
+        <div class="p-4 bg-purple-500/10 rounded-xl border border-purple-500/20 max-w-lg mx-auto">
+          <p class="text-xs font-bold text-purple-700 dark:text-purple-300">🎓 Prepare for Kerala SSLC State Board Exams 2026 with Zymthra Pro!</p>
+          <p class="text-[11px] text-slate-500">Get unlimited PDF downloads and remove all sponsored ads.</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= VIEW 2: SUBJECTS & CHAPTER NOTES ================= -->
+    <section id="view-subjects" class="hidden space-y-6">
+      
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+        <div>
+          <h1 class="text-2xl font-black">SSLC Subject Syllabus & PDF Notes</h1>
+          <p class="text-xs text-slate-500">Filter by Kerala State SCERT Class 10 Subjects</p>
+        </div>
+
+        <!-- SUBJECT FILTER PILLS -->
+        <div id="subject-pills-container" class="flex items-center gap-2 overflow-x-auto max-w-full pb-2 scrollbar-none">
+          <!-- Filter pills populated via JS -->
+        </div>
+      </div>
+
+      <!-- CONTENT GRID & READER SIDEBAR -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- CHAPTER CARDS LIST -->
+        <div id="chapters-list-container" class="lg:col-span-2 space-y-4">
+          <!-- Populated via JS -->
+        </div>
+
+        <!-- READER / FORMULA DRAWER -->
+        <div class="space-y-4">
+          <div class="sticky top-24 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl space-y-4">
+            <h3 class="font-bold text-sm border-b border-slate-200 dark:border-slate-800 pb-3 flex items-center justify-between">
+              <span>📖 Note Reader Drawer</span>
+              <button onclick="closeReader()" id="reader-close-btn" class="hidden text-xs text-slate-400 hover:text-slate-600">Close</button>
+            </h3>
+
+            <div id="reader-content-box">
+              <div class="text-center py-12 space-y-3">
+                <div class="text-4xl opacity-30">📚</div>
+                <p class="text-xs text-slate-500">Click "Open Note Reader" on any chapter card to view formulas, summaries, and key points directly online.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ================= VIEW 3: SSLC STUDY TOOLS ================= -->
+    <section id="view-tools" class="hidden space-y-8">
+      <div>
+        <h1 class="text-2xl font-black">Interactive SSLC Exam Tools</h1>
+        <p class="text-xs text-slate-500">Calculators, formula revision guides, and exam practice utilities</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- TOOL 1: SSLC GRADE / SGPA CALCULATOR -->
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+          <div class="flex items-center gap-3">
+            <span class="p-3 bg-purple-500/10 text-purple-600 rounded-xl text-xl">🧮</span>
+            <div>
+              <h3 class="font-bold text-sm">SSLC Grade / Mark Predictor</h3>
+              <p class="text-[11px] text-slate-500">Calculate estimated grade points based on total score</p>
+            </div>
+          </div>
+
+          <div class="space-y-3 text-xs">
+            <div>
+              <label class="block font-bold mb-1">Enter your score out of 80 (or 40 for IT):</label>
+              <input type="number" id="calc-score" placeholder="e.g. 72" max="80" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800">
+            </div>
+            <div>
+              <label class="block font-bold mb-1">Max Score:</label>
+              <select id="calc-max" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800">
+                <option value="80">80 Marks (Maths, Social, Science, Languages)</option>
+                <option value="40">40 Marks (Information Technology / Half Paper)</option>
+              </select>
+            </div>
+            <button onclick="calculateGrade()" class="w-full py-2.5 bg-purple-600 text-white font-bold rounded-xl shadow-xs">Calculate Estimated Grade</button>
+            
+            <div id="grade-result" class="hidden p-3 bg-purple-50 dark:bg-purple-950/40 rounded-xl text-center font-bold text-purple-700 dark:text-purple-300">
+            </div>
+          </div>
+        </div>
+
+        <!-- TOOL 2: PHYSICS & MATHS FORMULA QUICK SHEET -->
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+          <div class="flex items-center gap-3">
+            <span class="p-3 bg-amber-500/10 text-amber-600 rounded-xl text-xl">📐</span>
+            <div>
+              <h3 class="font-bold text-sm">Rapid Formula Flashcards</h3>
+              <p class="text-[11px] text-slate-500">Key SSLC Class 10 Math & Physics Equations</p>
+            </div>
+          </div>
+
+          <div class="space-y-2 text-xs">
+            <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+              <span class="font-bold text-purple-600 dark:text-purple-400">Arithmetic Sequences:</span>
+              <p className="text-slate-600 dark:text-slate-300 mt-1">xₙ = a + (n-1)d = dn + (a-d) | Sₙ = (n/2)[x₁ + xₙ]</p>
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+              <span class="font-bold text-purple-600 dark:text-purple-400">Joule's Heating Law:</span>
+              <p className="text-slate-600 dark:text-slate-300 mt-1">H = I²Rt | Power P = VI = I²R = V²/R</p>
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+              <span class="font-bold text-purple-600 dark:text-purple-400">Transformer Voltage Ratio:</span>
+              <p className="text-slate-600 dark:text-slate-300 mt-1">Vₛ / Vₚ = Nₛ / Nₚ = Iₚ / Iₛ</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VIEW 4: ZYMTHRA PRO PASS ================= -->
+    <section id="view-premium" class="hidden max-w-3xl mx-auto space-y-8 py-4">
+      <div class="text-center space-y-3">
+        <span class="px-3.5 py-1 rounded-full bg-amber-500/10 text-amber-600 font-black text-xs border border-amber-500/20">
+          👑 ZYMTHRA PRO PASS
+        </span>
+        <h1 class="text-3xl font-black">100% Ad-Free. Unlimited SSLC Downloads.</h1>
+        <p class="text-xs text-slate-500 max-w-lg mx-auto">Get unrestricted access to all SCERT Class 10 chapter notes, solved board papers, and discourse revision guides.</p>
+      </div>
+
+      <div class="p-8 rounded-3xl bg-gradient-to-br from-slate-950 via-purple-950 to-indigo-950 text-white shadow-2xl border border-purple-500/30 space-y-6">
+        <div class="flex items-center justify-between border-b border-white/10 pb-6">
+          <div>
+            <h3 class="text-xl font-extrabold">1-Month Unlimited Pro Pass</h3>
+            <p class="text-xs text-purple-300">Complete access to all 9 SSLC Subjects</p>
+          </div>
+          <div class="text-right">
+            <span class="text-3xl font-black text-amber-400">₹99</span>
+            <span class="text-xs text-slate-400 block">/ month</span>
+          </div>
+        </div>
+
+        <ul class="space-y-3 text-xs text-slate-200">
+          <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Completely Ad-Free experience</li>
+          <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Unlimited PDF Downloads (Zero Credits required)</li>
+          <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Gold Pro Badge on your profile</li>
+          <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Direct high-speed download links</li>
+        </ul>
+
+        <div id="premium-action-box">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VIEW 5: USER DASHBOARD ================= -->
+    <section id="view-dashboard" class="hidden space-y-6">
+      <h1 class="text-2xl font-black">Student Dashboard</h1>
+
+      <!-- STATS CARDS -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
+          <div>
+            <span class="text-xs text-slate-500 font-medium">Credits Balance</span>
+            <span id="dash-credits" class="text-3xl font-black text-purple-600 dark:text-purple-400 block">15</span>
+          </div>
+          <button onclick="startRewardedAd()" class="p-3 bg-amber-500/10 text-amber-500 rounded-2xl text-xl" title="Watch Ad for Credits">🪙</button>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
+          <div>
+            <span class="text-xs text-slate-500 font-medium">Plan Status</span>
+            <span id="dash-plan" class="text-lg font-black text-slate-800 dark:text-white block">Free Plan</span>
+          </div>
+          <button onclick="switchTab('premium')" class="p-3 bg-purple-500/10 text-purple-500 rounded-2xl text-xl">⚡</button>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
+          <div>
+            <span class="text-xs text-slate-500 font-medium">PDF Downloads</span>
+            <span id="dash-downloads-count" class="text-3xl font-black text-emerald-600 dark:text-emerald-400 block">1</span>
+          </div>
+          <div class="p-3 bg-emerald-500/10 text-emerald-500 rounded-2xl text-xl">📥</div>
+        </div>
+      </div>
+
+      <!-- TRANSACTION & DOWNLOAD LOGS -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
+          <h3 class="font-bold text-sm">Download History</h3>
+          <div id="downloads-history-list" class="space-y-2">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
+          <h3 class="font-bold text-sm">Credit Transactions Log</h3>
+          <div id="credit-history-list" class="space-y-2">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VIEW 6: ADMIN PANEL ================= -->
+    <section id="view-admin" class="hidden space-y-6">
+      <div class="p-6 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-between">
+        <div>
+          <h1 class="text-xl font-bold">Admin Management Console</h1>
+          <p class="text-xs text-slate-500">Publish SSLC chapters, toggle credit costs, and manage syllabus materials</p>
+        </div>
+        <span class="px-3 py-1 bg-purple-600 text-white font-bold text-[10px] uppercase rounded-full">Admin Active</span>
+      </div>
+
+      <!-- ADD CHAPTER FORM -->
+      <form onsubmit="handleAdminAddChapter(event)" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4 text-xs">
+        <h3 class="font-bold text-sm border-b border-slate-100 dark:border-slate-800 pb-2">Publish New Chapter Note</h3>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-bold mb-1">Subject</label>
+            <select id="admin-subject-select" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800">
+              <!-- Populated via JS -->
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-bold mb-1">Chapter Title</label>
+            <input type="text" id="admin-title" placeholder="e.g. Chemical Reactions & Equations" required class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800">
+          </div>
+
+          <div class="sm:col-span-2">
+            <label class="block font-bold mb-1">Summary Overview</label>
+            <textarea id="admin-summary" rows="2" placeholder="Brief description for cards..." required class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800"></textarea>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label class="block font-bold mb-1">Note Content & Key Formulas</label>
+            <textarea id="admin-content" rows="3" placeholder="Key formulas, hot questions, discourse points..." class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800"></textarea>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <input type="checkbox" id="admin-is-premium" onchange="toggleAdminCostVisibility()" class="rounded text-purple-600 h-4 w-4">
+            <label for="admin-is-premium" class="font-bold">Set as Premium PDF</label>
+          </div>
+
+          <div id="admin-cost-wrapper" class="hidden">
+            <label class="block font-bold mb-1">Credit Cost</label>
+            <input type="number" id="admin-cost" value="5" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800">
+          </div>
+        </div>
+
+        <button type="submit" class="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-xs transition">
+          Publish Chapter Note
+        </button>
+      </form>
+
+      <!-- PUBLISHED CHAPTERS TABLE -->
+      <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
+        <h3 class="font-bold text-sm">Published Chapter Notes</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="border-b border-slate-200 dark:border-slate-800 text-slate-400">
+              <tr>
+                <th class="py-2">Title</th>
+                <th class="py-2">Subject</th>
+                <th class="py-2">Type</th>
+                <th class="py-2">Cost</th>
+                <th class="py-2 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-chapters-table" class="divide-y divide-slate-100 dark:divide-slate-800">
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VIEW 7: DATABASE SCHEMA ARCHITECTURE ================= -->
+    <section id="view-database" class="hidden space-y-6">
+      <div>
+        <h1 class="text-2xl font-black">Backend & Database Architecture</h1>
+        <p class="text-xs text-slate-500">PostgreSQL / Supabase Ready Relational Schema Structure</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 font-mono text-xs">
+          <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
+            <span class="text-purple-600 dark:text-purple-400 font-bold">TABLE: users</span>
+            <span class="text-[10px] text-slate-400">PostgreSQL</span>
+          </div>
+          <ul class="space-y-1 text-slate-600 dark:text-slate-300">
+            <li>▪ id (UUID PK)</li>
+            <li>▪ email (TEXT UNIQUE)</li>
+            <li>▪ credits_balance (INT DEFAULT 15)</li>
+            <li>▪ is_pro (BOOLEAN DEFAULT FALSE)</li>
+            <li>▪ created_at (TIMESTAMP)</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 font-mono text-xs">
+          <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
+            <span class="text-purple-600 dark:text-purple-400 font-bold">TABLE: chapters</span>
+            <span class="text-[10px] text-slate-400">PostgreSQL</span>
+          </div>
+          <ul class="space-y-1 text-slate-600 dark:text-slate-300">
+            <li>▪ id (UUID PK)</li>
+            <li>▪ subject_id (TEXT FK)</li>
+            <li>▪ title (TEXT)</li>
+            <li>▪ summary (TEXT)</li>
+            <li>▪ is_premium (BOOLEAN)</li>
+            <li>▪ credit_cost (INT)</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 font-mono text-xs">
+          <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
+            <span class="text-purple-600 dark:text-purple-400 font-bold">TABLE: credit_transactions</span>
+            <span class="text-[10px] text-slate-400">PostgreSQL</span>
+          </div>
+          <ul class="space-y-1 text-slate-600 dark:text-slate-300">
+            <li>▪ id (UUID PK)</li>
+            <li>▪ user_id (UUID FK)</li>
+            <li>▪ amount (INT)</li>
+            <li>▪ type (ad_reward | download | purchase)</li>
+            <li>▪ created_at (TIMESTAMP)</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 font-mono text-xs">
+          <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
+            <span class="text-purple-600 dark:text-purple-400 font-bold">TABLE: subscriptions</span>
+            <span class="text-[10px] text-slate-400">PostgreSQL</span>
+          </div>
+          <ul class="space-y-1 text-slate-600 dark:text-slate-300">
+            <li>▪ id (UUID PK)</li>
+            <li>▪ user_id (UUID FK)</li>
+            <li>▪ razorpay_payment_id (TEXT)</li>
+            <li>▪ status (active | expired)</li>
+            <li>▪ expires_at (TIMESTAMP)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL 1: REWARDED AD TIMER MODAL -->
+  <div id="ad-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 text-white rounded-3xl max-w-md w-full p-6 space-y-6 shadow-2xl relative">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <span class="font-bold text-xs flex items-center gap-2">
+          <span class="text-amber-400">▶</span> Sponsored Video Ad
+        </span>
+        <span id="ad-timer-text" class="text-xs font-mono bg-slate-800 px-2.5 py-1 rounded-full text-amber-400 font-bold">
+          15s remaining
+        </span>
+      </div>
+
+      <div class="h-44 rounded-2xl bg-gradient-to-tr from-purple-900 via-indigo-900 to-slate-900 flex flex-col items-center justify-center p-6 text-center space-y-3 border border-purple-500/30">
+        <span class="text-4xl animate-bounce">🪙</span>
+        <h4 class="font-bold text-sm">Zymthra SSLC Sponsor Video</h4>
+        <p class="text-xs text-slate-300">Complete watching the video to claim +5 free download credits.</p>
+        
+        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+          <div id="ad-progress-bar" class="bg-amber-400 h-full w-0 transition-all duration-1000"></div>
+        </div>
+      </div>
+
+      <div id="ad-action-container">
+        <p class="text-center text-xs text-slate-400 italic">Ad in progress... Credits awarded upon video completion.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: INSUFFICIENT CREDITS GATE MODAL -->
+  <div id="gate-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 space-y-6 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+        <span class="font-extrabold text-sm text-rose-500">🪙 Insufficient Credits</span>
+        <button onclick="closeGateModal()" class="text-slate-400 hover:text-slate-600">✕</button>
+      </div>
+
+      <div class="space-y-2">
+        <h4 id="gate-chapter-title" class="font-bold text-sm">Chapter Title</h4>
+        <p class="text-xs text-slate-500">
+          This PDF requires <strong class="text-amber-500">5 Credits</strong>. Your current balance is <strong id="gate-user-credits">0 Credits</strong>.
+        </p>
+      </div>
+
+      <div class="space-y-3 pt-2">
+        <button onclick="closeGateModal(); startRewardedAd();" class="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-extrabold text-xs shadow-md flex items-center justify-center gap-2">
+          <span>▶</span> Watch 15s Ad (+5 Credits)
+        </button>
+
+        <button onclick="closeGateModal(); switchTab('premium');" class="w-full py-3 rounded-2xl bg-purple-600 hover:bg-purple-700 text-white font-extrabold text-xs shadow-md">
+          ⚡ Upgrade to Pro Pass (Unlimited)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: PAYMENT SANDBOX MODAL -->
+  <div id="pay-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 space-y-6 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+        <span class="font-bold text-sm flex items-center gap-2">
+          <span>💳</span> Zymthra Secure Sandbox Payment
+        </span>
+        <button onclick="closePayModal()" class="text-slate-400 hover:text-slate-600">✕</button>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800 space-y-2">
+        <div class="flex justify-between text-xs font-black">
+          <span>1-Month Unlimited Pro Pass</span>
+          <span class="text-amber-500">₹99.00</span>
+        </div>
+        <p class="text-[10px] text-slate-500">Unlocks all 9 SSLC subjects, unlimited PDF downloads, and removes all ads.</p>
+      </div>
+
+      <button onclick="confirmPayment()" class="w-full py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-lg transition">
+        Pay ₹99 via UPI / GPay Sandbox
+      </button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-400">
+    <p>© 2026 ZYMTHRA - Kerala SSLC Educational Platform. SCERT Syllabus Aligned.</p>
+  </footer>
+
+  <script>
+    /* INITIAL STATE DATA */
+    const INITIAL_SUBJECTS = [
+      { id: 'maths', name: 'Mathematics', nameMl: 'ഗണിതം', icon: '📐', count: 11 },
+      { id: 'physics', name: 'Physics', nameMl: 'ഭൗതികശാസ്ത്രം', icon: '⚡', count: 8 },
+      { id: 'chemistry', name: 'Chemistry', nameMl: 'രസതന്ത്രം', icon: '🧪', count: 7 },
+      { id: 'biology', name: 'Biology', nameMl: 'ജീവശാസ്ത്രം', icon: '🧬', count: 9 },
+      { id: 'social', name: 'Social Science', nameMl: 'സാമൂഹ്യശാസ്ത്രം', icon: '🌍', count: 14 },
+      { id: 'english', name: 'English', nameMl: 'ഇംഗ്ലീഷ്', icon: '📖', count: 8 },
+      { id: 'malayalam', name: 'Malayalam', nameMl: 'മലയാളം', icon: '🌴', count: 10 },
+      { id: 'hindi', name: 'Hindi', nameMl: 'ഹിന്ദി', icon: '🕉️', count: 6 },
+      { id: 'it', name: 'Information Tech', nameMl: 'ഐ.ടി.', icon: '💻', count: 5 }
+    ];
+
+    const INITIAL_CHAPTERS = [
+      {
+        id: 'ch-1',
+        subjectId: 'maths',
+        title: 'Arithmetic Sequences (സമാന്തരശ്രേണികൾ)',
+        summary: 'General term xₙ = dn + (a-d), Sum Sₙ = n/2[x₁ + xₙ]. SCERT board priority questions included.',
+        content: `### 1. Arithmetic Sequences Key Formulas\n- General Term: xₙ = a + (n-1)d = dn + (a-d)\n- Common Difference: d = (xₚ - xᵦ)/(p - q)\n- Sum: Sₙ = (n/2)(x₁ + xₙ)\n\n### Board Hot Questions\n1. Prove that the sum of continuous odd terms in an AP equals n × middle term.`,
+        isPremium: false,
+        cost: 0
+      },
+      {
+        id: 'ch-2',
+        subjectId: 'maths',
+        title: 'Circles & Tangents (വൃത്തങ്ങൾ)',
+        summary: 'Angles in semicircle, cyclic quadrilaterals theorem, tangents ratio and chords geometry.',
+        content: `### Key Theorems\n- Angle in a semicircle is 90°.\n- Cyclic Quadrilateral: Opposite angles sum up to 180°.\n- Tangent is perpendicular to radius at point of contact.`,
+        isPremium: true,
+        cost: 5
+      },
+      {
+        id: 'ch-3',
+        subjectId: 'physics',
+        title: 'Effects of Electric Current (വൈദ്യുതപ്രവാഹത്തിന്റെ ഫലങ്ങൾ)',
+        summary: 'Joule\'s Heating Law H = I²Rt, Electric Power P = VI = I²R = V²/R, Fuse wire & Safety.',
+        content: `### Joule's Law\nH = I²Rt\n- I = Current in Amps\n- R = Resistance in Ohms\n- t = Time in seconds\n\n### Fuse Characteristics\n1. Low melting point.\n2. Always connected in Series with live wire.`,
+        isPremium: false,
+        cost: 0
+      },
+      {
+        id: 'ch-4',
+        subjectId: 'physics',
+        title: 'Electromagnetic Induction & Power Transmission',
+        summary: 'Fleming\'s Right-Hand Rule, AC/DC Generators, Transformer ratio Vₛ/Vₚ = Nₛ/Nₚ.',
+        content: `### Transformer Formulas\nVₛ/Vₚ = Nₛ/Nₚ = Iₚ/Iₛ\n- Step-Up: Nₛ > Nₚ, Thick wire in primary.\n- Step-Down: Nₛ < Nₚ, Thin wire in primary.`,
+        isPremium: true,
+        cost: 5
+      },
+      {
+        id: 'ch-5',
+        subjectId: 'english',
+        title: 'Adventures in a Banyan Tree & Discourses',
+        summary: 'Ruskin Bond story summary, character sketch of grandfather, diary entry & profile discourse formats.',
+        content: `### Discourses Format Guide\n1. Character Sketch: Appearance, qualities, actions.\n2. Diary Entry: Personal tone, date header.\n3. Profile Writing: Headline, chronological bullet points.`,
+        isPremium: true,
+        cost: 5
+      },
+      {
+        id: 'ch-6',
+        subjectId: 'chemistry',
+        title: 'Periodic Table & Subshell Configuration',
+        summary: 'Subshell electronic configurations (s, p, d, f), block identification, oxidation states.',
+        content: `### Subshell Rules\n- Max capacities: s=2, p=6, d=10, f=14.\n- Chromium (₂₄Cr): 1s² 2s² 2p⁶ 3s² 3p⁶ 3d⁵ 4s¹\n- Copper (₂₉Cu): 1s² 2s² 2p⁶ 3s² 3p⁶ 3d¹⁰ 4s¹`,
+        isPremium: false,
+        cost: 0
+      }
+    ];
+
+    /* APP STATE */
+    let appState = {
+      activeTab: 'home',
+      darkMode: false,
+      credits: 15,
+      isPro: false,
+      selectedSubject: null,
+      searchQuery: '',
+      readingChapter: null,
+      gateChapter: null,
+      subjects: INITIAL_SUBJECTS,
+      chapters: INITIAL_CHAPTERS,
+      downloads: [
+        { id: 'd-1', title: 'Arithmetic Sequences', date: '2026-03-12', cost: 0 }
+      ],
+      creditHistory: [
+        { id: 'h-1', title: 'Welcome Bonus', amount: +15, date: '2026-03-10' }
+      ]
+    };
+
+    let adInterval = null;
+    let adTimeLeft = 15;
+
+    /* UI FUNCTIONS */
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `flex items-center gap-3 px-5 py-3 rounded-2xl text-white shadow-2xl border transition-all duration-300 pointer-events-auto ${
+        type === 'success' ? 'bg-slate-900 border-emerald-500/40 text-emerald-400' :
+        type === 'error' ? 'bg-slate-900 border-rose-500/40 text-rose-400' :
+        'bg-slate-900 border-purple-500/40 text-purple-300'
+      }`;
+      toast.innerHTML = `<span class="text-xs font-bold">${type === 'success' ? '✓' : 'ℹ'} ${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    function toggleDarkMode() {
+      appState.darkMode = !appState.darkMode;
+      const html = document.documentElement;
+      const icon = document.getElementById('theme-icon');
+      if (appState.darkMode) {
+        html.classList.add('dark');
+        icon.innerText = '☀️';
+      } else {
+        html.classList.remove('dark');
+        icon.innerText = '🌙';
+      }
+    }
+
+    function switchTab(tabId) {
+      appState.activeTab = tabId;
+      const views = ['home', 'subjects', 'tools', 'premium', 'dashboard', 'admin', 'database'];
+      
+      views.forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        const btn = document.getElementById(`nav-${v}`);
+        if (v === tabId) {
+          el.classList.remove('hidden');
+          if (btn) {
+            btn.className = 'px-3 py-2 rounded-xl transition nav-btn text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-950/60 font-bold';
+          }
+        } else {
+          el.classList.add('hidden');
+          if (btn) {
+            btn.className = 'px-3 py-2 rounded-xl transition nav-btn text-slate-600 dark:text-slate-300 hover:text-purple-600';
+          }
+        }
+      });
+
+      renderUserBadge();
+      renderViews();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderUserBadge() {
+      const container = document.getElementById('user-badge-container');
+      if (appState.isPro) {
+        container.innerHTML = `
+          <span class="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full text-xs font-extrabold shadow-sm">
+            👑 PRO USER
+          </span>
+        `;
+      } else {
+        container.innerHTML = `
+          <button onclick="startRewardedAd()" class="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-full text-xs font-bold shadow-xs hover:shadow transition group">
+            <span>🪙 ${appState.credits} Credits</span>
+            <span class="bg-amber-400 text-slate-900 px-1.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider group-hover:scale-105">+5 Ad</span>
+          </button>
+        `;
+      }
+
+      // Hide or show normal ads based on Pro status
+      const adBanner = document.getElementById('home-ad-banner');
+      const normalAd = document.getElementById('normal-ad-placement');
+      if (appState.isPro) {
+        if (adBanner) adBanner.classList.add('hidden');
+        if (normalAd) normalAd.classList.add('hidden');
+      } else {
+        if (adBanner) adBanner.classList.remove('hidden');
+        if (normalAd) normalAd.classList.remove('hidden');
+      }
+    }
+
+    function renderViews() {
+      // 1. Render Subjects Grid (Home)
+      const subjectsGrid = document.getElementById('subjects-grid');
+      subjectsGrid.innerHTML = appState.subjects.map(s => `
+        <button onclick="filterBySubject('${s.id}')" class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs hover:shadow-md transition text-left flex flex-col justify-between h-32 group">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl group-hover:scale-110 transition-transform">${s.icon}</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">${s.count} Ch</span>
+          </div>
+          <div>
+            <h3 class="font-bold text-xs">${s.name}</h3>
+            <p class="text-[11px] text-slate-400">${s.nameMl}</p>
+          </div>
+        </button>
+      `).join('');
+
+      // 2. Render Featured Chapters (Home)
+      const featuredGrid = document.getElementById('featured-chapters-grid');
+      featuredGrid.innerHTML = appState.chapters.slice(0, 6).map(ch => renderChapterCardHTML(ch)).join('');
+
+      // 3. Render Subject Pills (Subjects View)
+      const pillsContainer = document.getElementById('subject-pills-container');
+      pillsContainer.innerHTML = `
+        <button onclick="filterBySubject(null)" class="px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition ${appState.selectedSubject === null ? 'bg-purple-600 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}">All Subjects</button>
+      ` + appState.subjects.map(s => `
+        <button onclick="filterBySubject('${s.id}')" class="px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition flex items-center gap-1 ${appState.selectedSubject === s.id ? 'bg-purple-600 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}">
+          <span>${s.icon}</span> ${s.name}
+        </button>
+      `).join('');
+
+      // 4. Render Chapters List (Subjects View)
+      const filtered = appState.chapters.filter(ch => {
+        const matchesSub = appState.selectedSubject ? ch.subjectId === appState.selectedSubject : true;
+        const matchesQuery = appState.searchQuery ? ch.title.toLowerCase().includes(appState.searchQuery.toLowerCase()) || ch.summary.toLowerCase().includes(appState.searchQuery.toLowerCase()) : true;
+        return matchesSub && matchesQuery;
+      });
+
+      const chaptersList = document.getElementById('chapters-list-container');
+      if (filtered.length === 0) {
+        chaptersList.innerHTML = `<div class="p-12 text-center text-slate-400 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800">No notes found matching your filter.</div>`;
+      } else {
+        chaptersList.innerHTML = filtered.map(ch => renderChapterCardHTML(ch)).join('');
+      }
+
+      // 5. Render Pro Action Box
+      const proBox = document.getElementById('premium-action-box');
+      if (appState.isPro) {
+        proBox.innerHTML = `<div class="p-4 bg-emerald-500/20 rounded-2xl text-center border border-emerald-500/30 text-emerald-300 text-xs font-bold">✓ You are currently subscribed to Zymthra Pro Pass!</div>`;
+      } else {
+        proBox.innerHTML = `<button onclick="openPayModal()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black text-xs shadow-xl transition">Upgrade to Pro for ₹99</button>`;
+      }
+
+      // 6. Render Dashboard
+      document.getElementById('dash-credits').innerText = appState.credits;
+      document.getElementById('dash-plan').innerText = appState.isPro ? '👑 Pro Pass' : 'Free Plan';
+      document.getElementById('dash-downloads-count').innerText = appState.downloads.length;
+
+      document.getElementById('downloads-history-list').innerHTML = appState.downloads.map(d => `
+        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl flex items-center justify-between text-xs">
+          <div><p class="font-bold">${d.title}</p><p class="text-[10px] text-slate-400">${d.date}</p></div>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 font-bold">${d.cost > 0 ? `-${d.cost} Credits` : 'Free'}</span>
+        </div>
+      `).join('');
+
+      document.getElementById('credit-history-list').innerHTML = appState.creditHistory.map(h => `
+        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl flex items-center justify-between text-xs">
+          <div><p class="font-bold">${h.title}</p><p class="text-[10px] text-slate-400">${h.date}</p></div>
+          <span class="font-bold ${h.amount > 0 ? 'text-emerald-500' : 'text-rose-500'}">${h.amount > 0 ? `+${h.amount}` : h.amount} Credits</span>
+        </div>
+      `).join('');
+
+      // 7. Render Admin Form & Table
+      const adminSubSelect = document.getElementById('admin-subject-select');
+      adminSubSelect.innerHTML = appState.subjects.map(s => `<option value="${s.id}">${s.name} (${s.nameMl})</option>`).join('');
+
+      document.getElementById('admin-chapters-table').innerHTML = appState.chapters.map(ch => `
+        <tr>
+          <td class="py-3 font-bold">${ch.title}</td>
+          <td class="py-3 text-slate-500">${ch.subjectId}</td>
+          <td class="py-3"><span class="px-2 py-0.5 rounded-full text-[9px] font-bold ${ch.isPremium ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'}">${ch.isPremium ? 'Premium' : 'Free'}</span></td>
+          <td class="py-3 font-bold">${ch.cost} Credits</td>
+          <td class="py-3 text-right"><button onclick="deleteChapter('${ch.id}')" class="text-rose-500 font-bold hover:underline">Delete</button></td>
+        </tr>
+      `).join('');
+    }
+
+    function renderChapterCardHTML(ch) {
+      return `
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs hover:shadow-md transition space-y-4 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${ch.isPremium ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300' : 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300'}">
+                ${ch.isPremium ? `Premium (${ch.cost} Credits)` : 'Free PDF'}
+              </span>
+            </div>
+            <h3 class="font-bold text-sm leading-snug">${ch.title}</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">${ch.summary}</p>
+          </div>
+
+          <div class="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-800 gap-2">
+            <button onclick="openReader('${ch.id}')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 hover:bg-purple-100">Read Online</button>
+            <button onclick="handleDownloadAttempt('${ch.id}')" class="px-4 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs rounded-xl shadow-xs hover:shadow transition">Download PDF</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function filterBySubject(subId) {
+      appState.selectedSubject = subId;
+      switchTab('subjects');
+    }
+
+    function handleHomeSearch(e) {
+      appState.searchQuery = e.target.value;
+      if (e.key === 'Enter') executeSearch();
+    }
+
+    function executeSearch() {
+      switchTab('subjects');
+    }
+
+    /* DOWNLOAD & CREDIT LOGIC */
+    function handleDownloadAttempt(chapterId) {
+      const ch = appState.chapters.find(c => c.id === chapterId);
+      if (!ch) return;
+
+      // Free user or Pro
+      if (appState.isPro || !ch.isPremium || ch.cost === 0) {
+        triggerPDFDownload(ch);
+        return;
+      }
+
+      // Check credit balance
+      if (appState.credits >= ch.cost) {
+        appState.credits -= ch.cost;
+        appState.creditHistory.unshift({
+          id: `h-${Date.now()}`,
+          title: `PDF Download: ${ch.title}`,
+          amount: -ch.cost,
+          date: new Date().toISOString().split('T')[0]
+        });
+        triggerPDFDownload(ch);
+        renderUserBadge();
+        renderViews();
+        showToast(`📥 PDF Download Started (-${ch.cost} Credits)`, 'success');
+      } else {
+        // Open Gate Modal
+        appState.gateChapter = ch;
+        document.getElementById('gate-chapter-title').innerText = ch.title;
+        document.getElementById('gate-user-credits').innerText = `${appState.credits} Credits`;
+        document.getElementById('gate-modal').classList.remove('hidden');
+      }
+    }
+
+    function triggerPDFDownload(ch) {
+      appState.downloads.unshift({
+        id: `d-${Date.now()}`,
+        title: ch.title,
+        date: new Date().toISOString().split('T')[0],
+        cost: ch.isPremium ? ch.cost : 0
+      });
+
+      const blob = new Blob([`ZYMTHRA KERALA SSLC HUB\n\nChapter: ${ch.title}\nSCERT Class 10 Syllabus\n\n${ch.summary}\n\n${ch.content}`], {type: 'text/plain'});
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${ch.title.replace(/[^a-zA-Z0-9]/g, '_')}_Zymthra_Notes.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function closeGateModal() {
+      document.getElementById('gate-modal').classList.add('hidden');
+    }
+
+    /* REWARDED AD TIMER ENGINE */
+    function startRewardedAd() {
+      adTimeLeft = 15;
+      const modal = document.getElementById('ad-modal');
+      const timerText = document.getElementById('ad-timer-text');
+      const progressBar = document.getElementById('ad-progress-bar');
+      const actionContainer = document.getElementById('ad-action-container');
+
+      modal.classList.remove('hidden');
+      timerText.innerText = `15s remaining`;
+      progressBar.style.width = `0%`;
+      actionContainer.innerHTML = `<p class="text-center text-xs text-slate-400 italic">Ad in progress... Credits awarded upon video completion.</p>`;
+
+      clearInterval(adInterval);
+      adInterval = setInterval(() => {
+        adTimeLeft--;
+        const pct = ((15 - adTimeLeft) / 15) * 100;
+        progressBar.style.width = `${pct}%`;
+        timerText.innerText = `${adTimeLeft}s remaining`;
+
+        if (adTimeLeft <= 0) {
+          clearInterval(adInterval);
+          timerText.innerText = `Verified ✓`;
+          actionContainer.innerHTML = `
+            <button onclick="claimAdCredits()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-black text-xs rounded-2xl shadow-lg animate-pulse">
+              🎉 Claim +5 Free Credits Now
+            </button>
+          `;
+        }
+      }, 1000);
+    }
+
+    function claimAdCredits() {
+      appState.credits += 5;
+      appState.creditHistory.unshift({
+        id: `h-${Date.now()}`,
+        title: 'Watched Rewarded Sponsor Video Ad',
+        amount: +5,
+        date: new Date().toISOString().split('T')[0]
+      });
+
+      document.getElementById('ad-modal').classList.add('hidden');
+      renderUserBadge();
+      renderViews();
+      showToast('🎉 +5 Download Credits added to your account!', 'success');
+    }
+
+    /* PRO PAYMENT SANDBOX */
+    function openPayModal() {
+      document.getElementById('pay-modal').classList.remove('hidden');
+    }
+
+    function closePayModal() {
+      document.getElementById('pay-modal').classList.add('hidden');
+    }
+
+    function confirmPayment() {
+      appState.isPro = true;
+      closePayModal();
+      renderUserBadge();
+      renderViews();
+      showToast('🚀 Welcome to Zymthra Pro! Unlimited downloads unlocked.', 'success');
+    }
+
+    /* READER DRAWER */
+    function openReader(chapterId) {
+      const ch = appState.chapters.find(c => c.id === chapterId);
+      if (!ch) return;
+
+      const container = document.getElementById('reader-content-box');
+      const closeBtn = document.getElementById('reader-close-btn');
+
+      closeBtn.classList.remove('hidden');
+      container.innerHTML = `
+        <div class="space-y-3 text-xs">
+          <h4 class="font-bold text-purple-600 dark:text-purple-400">${ch.title}</h4>
+          <div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl space-y-2 max-h-96 overflow-y-auto whitespace-pre-line text-slate-700 dark:text-slate-300">${ch.content}</div>
+          <button onclick="handleDownloadAttempt('${ch.id}')" class="w-full py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs rounded-xl shadow-xs">Download Full PDF</button>
+        </div>
+      `;
+    }
+
+    function closeReader() {
+      const container = document.getElementById('reader-content-box');
+      const closeBtn = document.getElementById('reader-close-btn');
+      closeBtn.classList.add('hidden');
+      container.innerHTML = `
+        <div class="text-center py-12 space-y-3">
+          <div class="text-4xl opacity-30">📚</div>
+          <p class="text-xs text-slate-500">Click "Open Note Reader" on any chapter card to view formulas online.</p>
+        </div>
+      `;
+    }
+
+    /* TOOLS CALCULATOR */
+    function calculateGrade() {
+      const score = parseFloat(document.getElementById('calc-score').value);
+      const maxScore = parseFloat(document.getElementById('calc-max').value);
+      const resBox = document.getElementById('grade-result');
+
+      if (isNaN(score) || score < 0 || score > maxScore) {
+        showToast('Please enter a valid score within the max range', 'error');
+        return;
+      }
+
+      const percentage = (score / maxScore) * 100;
+      let grade = 'E';
+      if (percentage >= 90) grade = 'A+ (Outstanding)';
+      else if (percentage >= 80) grade = 'A (Excellent)';
+      else if (percentage >= 70) grade = 'B+ (Very Good)';
+      else if (percentage >= 60) grade = 'B (Good)';
+      else if (percentage >= 50) grade = 'C+ (Above Average)';
+      else if (percentage >= 40) grade = 'C (Average)';
+      else if (percentage >= 30) grade = 'D+ (Eligible for Higher Studies)';
+
+      resBox.classList.remove('hidden');
+      resBox.innerText = `Percentage: ${percentage.toFixed(1)}% | Estimated Grade: ${grade}`;
+    }
+
+    /* ADMIN CRUD */
+    function toggleAdminCostVisibility() {
+      const check = document.getElementById('admin-is-premium').checked;
+      const wrapper = document.getElementById('admin-cost-wrapper');
+      if (check) wrapper.classList.remove('hidden');
+      else wrapper.classList.add('hidden');
+    }
+
+    function handleAdminAddChapter(e) {
+      e.preventDefault();
+      const subjectId = document.getElementById('admin-subject-select').value;
+      const title = document.getElementById('admin-title').value;
+      const summary = document.getElementById('admin-summary').value;
+      const content = document.getElementById('admin-content').value;
+      const isPremium = document.getElementById('admin-is-premium').checked;
+      const cost = isPremium ? parseInt(document.getElementById('admin-cost').value) || 5 : 0;
+
+      const newCh = {
+        id: `ch-${Date.now()}`,
+        subjectId,
+        title,
+        summary,
+        content: content || summary,
+        isPremium,
+        cost
+      };
+
+      appState.chapters.unshift(newCh);
+      showToast(`Published chapter: ${title}`, 'success');
+      
+      // Reset form
+      document.getElementById('admin-title').value = '';
+      document.getElementById('admin-summary').value = '';
+      document.getElementById('admin-content').value = '';
+      document.getElementById('admin-is-premium').checked = false;
+      toggleAdminCostVisibility();
+      renderViews();
+    }
+
+    function deleteChapter(id) {
+      appState.chapters = appState.chapters.filter(c => c.id !== id);
+      showToast('Chapter removed from database', 'info');
+      renderViews();
+    }
+
+    /* INIT ON LOAD */
+    window.onload = function() {
+      renderUserBadge();
+      renderViews();
+    };
+  </script>
+</body>
+</html>
